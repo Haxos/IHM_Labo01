@@ -70,23 +70,35 @@ export default {
         'background-color': this.color,
         'color': this.fontColor,
         padding: '20px',
+        'text-align': 'left',
       }
     },
     titleStyle() {
       return {
         height: `${this.heightTitle}px`,
+        'vertical-align': 'top',
+      }
+    },
+    contentStyle() {
+      return {
+        height: `${this.height - (this.heightTitle + this.heightDate)}px`,
+        'vertical-align': 'top',
+        'padding-top': '10px',
+        'padding-bottom': '10px',
       }
     },
     dateStyle() {
       return {
         height: `${this.heightDate}px`,
-      }
-    },
-    contentStyle() {
-      return {
-        height: `${this.height - (this.heightTitle + this.heightDate)}px`
+        'text-align': 'end'
       }
     },
   }
 };
 </script>
+
+<style scoped>
+table, tr {
+  width: 100%;
+}
+</style>
