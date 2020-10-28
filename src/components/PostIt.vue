@@ -61,9 +61,15 @@ export default {
     },
     mainStyle() {
       return {
+        left: `${this.x}px`,
+        top: `${this.y}px`,
+        position: 'absolute',
+        'z-index': this.z,
         width: `${this.width}px`,
         height: `${this.height}px`,
         'background-color': this.color,
+        'color': this.fontColor,
+        padding: '20px',
       }
     },
     titleStyle() {
