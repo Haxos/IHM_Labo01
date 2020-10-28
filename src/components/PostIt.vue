@@ -1,6 +1,16 @@
 <template>
-  <div :style="style">
-
+  <div :style="mainStyle">
+    <table>
+      <tr :style="titleStyle">
+        <td>{{title}}</td>
+      </tr>
+      <tr :style="contentStyle">
+        <td>{{content}}</td>
+      </tr>
+      <tr :style="dateStyle">
+        <td>{{new Intl.DateTimeFormat('fr-CH').format(date)}}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -21,18 +31,26 @@ export default {
     },
     title: {
       type: String,
-      default: "",
+      default: "title",
     },
     content: {
       type: String,
-      default: "",
+      default: "content",
     },
+    date: {
+      type: Date,
+      default() {
+        return new Date()
+      }
+    }
   },
   data() {
     return {
       x: 0,
       y: 0,
       z: 0, // the lower, the further on the back it is
+      heightTitle: 30,
+      heightDate: 30,
     }
   },
   computed: {
@@ -41,11 +59,26 @@ export default {
       // Color between white and black
       return "White"
     },
-    style() {
+    mainStyle() {
       return {
         width: `${this.width}px`,
         height: `${this.height}px`,
         'background-color': this.color,
+      }
+    },
+    titleStyle() {
+      return {
+        height: `${this.heightTitle}px`,
+      }
+    },
+    dateStyle() {
+      return {
+        height: `${this.heightDate}px`,
+      }
+    },
+    contentStyle() {
+      return {
+        height: `${this.height - (this.heightTitle + this.heightDate)}px`
       }
     },
   }
