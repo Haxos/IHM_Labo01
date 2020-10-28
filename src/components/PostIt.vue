@@ -1,5 +1,7 @@
-<<template>
-  <div></div>
+<template>
+  <div :style="style">
+
+  </div>
 </template>
 
 <script>
@@ -38,7 +40,14 @@ export default {
       // TODO: get opposiite saturation & value from color. 
       // Color between white and black
       return "White"
-    }
+    },
+    style() {
+      return {
+        width: `${this.width}px`,
+        height: `${this.height}px`,
+        'background-color': this.color,
+      }
+    },
   }
 };
 </script>
