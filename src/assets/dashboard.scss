@@ -30,6 +30,9 @@
     left: 0;
     text-align: left;
     width: calc(70% - 70px);
+    font-size: 32px;
+    display: flex;
+    align-items: center;
 }
 
 .icon-zone {
@@ -37,5 +40,7 @@
 }
 
 .icon-add {
-    height: 80px;
+    height: 60px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
