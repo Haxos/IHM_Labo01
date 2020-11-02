@@ -1,0 +1,28 @@
+.create-postit-container {
+    position:fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
+
+.cancel-button {
+    position: absolute;
+    background-color: #F7D4B1;
+    bottom: 20px;
+    right: 10px;
+    width:15%;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.validate-button {
+    position: absolute;
+    background-color: #E8F5B3;
+    bottom: 20px;
+    left: 10px;
+    width:15%;
+    text-align: center;
+    padding-top: 20px;
+}
