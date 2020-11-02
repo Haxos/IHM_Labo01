@@ -1,9 +1,17 @@
 <template>
   <div>
-    <PostIt/>
-    <DeletePostIt/>
-    <EditPostIt/>
-    <AddPostIt/>
+    <PostIt
+      @postItDragStop="onDragStop"
+      @postItDragStart="onDragStart"
+    />
+    <DeletePostIt 
+      :post-it-dragged="postItDragged"
+    />
+    <EditPostIt
+      :post-it-dragged="postItDragged"
+    />
+    <AddPostIt 
+    />
   </div>
 </template>
 
@@ -20,6 +28,20 @@ export default {
     DeletePostIt,
     EditPostIt,
     AddPostIt
+  },
+
+  data() {
+    return {
+      postItDragged: false
+    }
+  },
+  methods: {
+    onDragStart() {
+      this.postItDragged = true
+    },
+    onDragStop() {
+      this.postItDragged = false
+    }
   }
   
 }

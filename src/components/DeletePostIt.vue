@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="rounded-zone delete-postit-zone">
+    <div :class="classCss">
         <img class="icon-zone" src="../assets/delete.png">
     </div>
 </div>
@@ -11,6 +11,11 @@
 import "../assets/main.scss"
 export default {
   props: {
+    postItDragged: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
   data() {
     return {
@@ -18,7 +23,14 @@ export default {
     }
   },
   computed: {
-
+    classCss() {
+      let def = "rounded-zone delete-postit-zone";
+      if(this.postItDragged) {
+        return def + " rounded-zone-drag"; 
+      } else {
+        return def;
+      }
+    }
   }
 };
 </script>

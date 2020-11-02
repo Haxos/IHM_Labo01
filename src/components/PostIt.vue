@@ -1,5 +1,5 @@
 <template>
-  <div :style="mainStyle">
+  <div @dragstart="onDragStart" @dragend="onDragStop" :draggable="true" class="postIt" :style="mainStyle">
     <table>
       <tr :style="titleStyle">
         <td>{{title}}</td>
@@ -51,6 +51,14 @@ export default {
       z: 0, // the lower, the further on the back it is
       heightTitle: 30,
       heightDate: 30,
+    }
+  },
+  methods: {
+    onDragStart() {
+      this.$emit("postItDragStart");
+    },
+    onDragStop() {
+      this.$emit("postItDragStop");
     }
   },
   computed: {

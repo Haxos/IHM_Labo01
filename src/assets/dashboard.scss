@@ -8,6 +8,7 @@
     padding-top: 10px;
     margin-right: 20px;
     margin-left: 20px;
+    box-sizing: border-box;
 }
 .delete-postit-zone {
     position: absolute;
@@ -43,4 +44,8 @@
     height: 60px;
     margin-right: 20px;
     margin-left: 20px;
+}
+
+.rounded-zone-drag {
+    border: 4px dashed black;
 }
