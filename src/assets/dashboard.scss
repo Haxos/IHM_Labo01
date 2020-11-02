@@ -1,0 +1,46 @@
+.rounded-zone {
+    border: 1px solid black;
+    -webkit-border-radius: 28px;
+    border-radius: 28px;
+    height: 100px;
+    cursor: pointer;
+    vertical-align: center;
+    padding-top: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.delete-postit-zone {
+    position: absolute;
+    bottom: 20px;
+    background-color:#f0b2b2;
+    width: 15%;
+    right: 0;
+}
+.edit-postit-zone {
+    position: absolute;
+    background-color: #F7D4B1;
+    bottom: 20px;
+    right: calc(15% + 10px);
+    width:15%;
+}
+.add-postit-zone {
+    position: absolute;
+    background-color: #E8FAB5;
+    bottom: 20px;
+    left: 0;
+    text-align: left;
+    width: calc(70% - 70px);
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.icon-zone {
+    height: 80px;
+}
+
+.icon-add {
+    height: 60px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
