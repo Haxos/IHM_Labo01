@@ -7,6 +7,10 @@ Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
+window.Noty = require('noty');
+import VueShortkey from "vue-shortkey";
+Vue.use(VueShortkey);
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -13,13 +13,19 @@
     />
     <DeletePostIt 
       :post-it-dragged="postItDragged"
+      :has-post-it-dragged="hasPostItDragged"
+      :has-post-it-dropped="hasPostItDropped"
+      :has-post-it-edited="hasPostItEdited"
     />
     <EditPostIt
       :post-it-dragged="postItDragged"
+      :has-post-it-dragged="hasPostItDragged"
+      :has-post-it-dropped="hasPostItDropped"
+      @postItIsBeingEdited="onPostItBeingEdited"
     />
     <AddPostIt 
       @postItAdded="addPostIt"
-      :post-it-dragged="postItDragged"
+      :post-it-dragged="hasPostItDragged"
     />
   </div>
 </template>
@@ -43,7 +49,10 @@ export default {
   data() {
     return {
       postIts : [],
-      postItDragged: false
+      hasPostItDragged: false,
+      hasPostItDropped: false,
+      hasPostItEdited: false,
+      postItDragged: {}
     }
   },
   mounted() {
@@ -61,6 +70,9 @@ export default {
     eraseAllPostIt() {
       localStorage.postIts = ""
     },
+    onPostItBeingEdited() {
+      this.hasPostItEdited = true
+    },
     addPostIt(el) {
       let element = {}
       element.title = el.title
@@ -75,11 +87,16 @@ export default {
       localStorage.postIts = "";
       localStorage.postIts = JSON.stringify(this.postIts)
     },
-    onDragStart() {
-      this.postItDragged = true
+    onDragStart(element) {
+      this.hasPostItEdited = false
+      this.hasPostItDropped = false
+      this.hasPostItDragged = true
+      this.postItDragged = element
     },
-    onDragStop() {
-      this.postItDragged = false
+    onDragStop(element) {
+      this.hasPostItDragged = false
+      this.postItDragged = element
+      this.hasPostItDropped = true
     }
   }
   

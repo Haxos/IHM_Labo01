@@ -1,5 +1,6 @@
 <template>
   <vue-draggable-resizable  
+    :ref="refPostIt"
     v-bind="dragOptions"
     @dragging="onDrag"
     @dragstop="onDragStop"
@@ -52,21 +53,41 @@ export default {
   },
   data() {
     return {
-      x: 0,
-      y: 0,
+      left: 0,
+      top: 0,
+      bottom: 0,
+      right: 0,
       z: 10, // the lower, the further on the back it is
       heightTitle: 30,
       heightDate: 30,
-      isDragging: false
+      isDragging: false,
+      refPostIt: "ref_" + Math.random() * 1000
     }
   },
   methods: {
     onDrag() {
-      this.$emit("postItDragStart");
+      this.left = this.$el.getBoundingClientRect().left
+      this.top = this.$el.getBoundingClientRect().top
+      this.bottom = this.$el.getBoundingClientRect().bottom
+      this.right = this.$el.getBoundingClientRect().right
+      this.$emit("postItDragStart",{
+        left : this.left,
+        top: this.top,
+        bottom: this.bottom,
+        right: this.right
+      });
       this.isDragging = true;
     },
     onDragStop() {
-      this.$emit("postItDragStop");
+      this.$emit("postItDragStop", {
+        left: this.left,
+        top: this.top,
+        bottom: this.bottom,
+        right: this.right,
+        title: this.title,
+        content: this.content,
+        date: this.date
+      });
       this.isDragging = false;
     }
   },
@@ -86,8 +107,6 @@ export default {
     },
     mainStyle() {
       return {
-        left: `${this.x}px`,
-        top: `${this.y}px`,
         position: 'absolute',
         'z-index': this.z,
         width: `${this.width}px`,

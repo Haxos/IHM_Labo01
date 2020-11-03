@@ -46,6 +46,12 @@ import ValidateButton from "./ValidateButton"
 import moment from "moment"
 
 export default {
+    props: {
+        postIt: {
+            type: Object,
+            required: false
+        }
+    },
     components: {
         CancelButton,
         ValidateButton
@@ -56,6 +62,22 @@ export default {
                 title: "",
                 description: "",
                 date: moment.now()
+            }
+        }
+    },
+    mounted() {
+        if(this.postIt !== undefined) {
+            this.data.title = this.postIt.title;
+            this.data.description = this.postIt.content;
+            this.data.date = moment(this.postIt.date).format("YYYY-MM-DD");
+        }
+    },
+    watch: {
+        postIt(newVal) {
+            if(newVal) {
+                this.data.title = newVal.title;
+                this.data.description = newVal.content;
+                this.data.date = newVal.date;
             }
         }
     },

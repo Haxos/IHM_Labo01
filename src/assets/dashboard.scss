@@ -16,6 +16,8 @@
     background-color:#f0b2b2;
     width: 30%;
     right: 0;
+    clear:both;
+    display:block;
 }
 .edit-postit-zone {
     position: absolute;
@@ -58,4 +60,8 @@
 
 .add-zone-drag {
     filter: grayscale(100%)
+}
+
+.element-drag-on-top {
+    border: 4px dashed red;
 }
