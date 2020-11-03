@@ -22,6 +22,7 @@
 
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable';
+
 export default {
   components: {
     VueDraggableResizable
@@ -47,12 +48,7 @@ export default {
       type: String,
       default: "content",
     },
-    date: {
-      type: Date,
-      default() {
-        return new Date()
-      }
-    }
+    date: null
   },
   data() {
     return {

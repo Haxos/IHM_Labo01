@@ -26,7 +26,7 @@ export default {
     classCss() {
       let def = "rounded-zone edit-postit-zone";
       if(this.postItDragged) {
-        return def + " rounded-zone-drag"; 
+        return def + " rounded-zone-drag edit-zone-drag"; 
       } else {
         return def;
       }

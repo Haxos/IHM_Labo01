@@ -1,12 +1,13 @@
 <template>
 <div>
-  <div class="rounded-zone add-postit-zone" @click="onClick" v-if="!createShouldBeDisplayed">
+  <div :class="classCss" @click="onClick" v-if="!createShouldBeDisplayed">
     <img src="../assets/plus.png" class="icon-add">
     <div class="text-add-postit-zone">
       {{ textPostIt }}
     </div>
   </div>
   <CreatePostIt 
+    @validate="onValidate"
     @canceled="onCancel" v-if="createShouldBeDisplayed"
   />
 </div>
@@ -21,6 +22,11 @@ export default {
     CreatePostIt
   },
   props: {
+    postItDragged: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
   },
   data() {
     return {
@@ -30,14 +36,25 @@ export default {
   },
   methods: {
     onCancel() {
+      this.modeCreate = false;    
+    },
+    onValidate(event) {
       this.modeCreate = false;
-      
+      this.$emit("postItAdded",event)
     },
     onClick() {
         this.modeCreate = true;  
     }
   },
   computed: {
+    classCss() {
+      let def = "rounded-zone add-postit-zone"
+      if(this.postItDragged) {
+        return def + " add-zone-drag";
+      } else {
+        return def;
+      }
+    },
     createShouldBeDisplayed() {
       return this.modeCreate;
     }
