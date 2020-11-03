@@ -5,6 +5,25 @@
     left: 0;
     right: 0;
     background-color: white;
+    z-index: 100;
+    font-size: 34px;
+    padding: 20px;
+    padding-top:50px;
+
+    .form-group {
+        border: 0px;
+        text-align: left;
+    }
+    input {
+        height: 60px;
+        width: 90%;
+        font-size: 30px;
+    }
+    textarea {
+        min-height: 320px;
+        width: 90%;
+        font-size: 30px;
+    }
 }
 
 .cancel-button {

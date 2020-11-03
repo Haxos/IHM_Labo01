@@ -2,7 +2,6 @@
   <vue-draggable-resizable  
     v-bind="dragOptions"
     @dragging="onDrag"
-    @dragstart="onDragStart"
     @dragstop="onDragStop"
     class="postIt" 
     :style="mainStyle"
@@ -18,7 +17,7 @@
         <td>{{new Intl.DateTimeFormat('fr-CH').format(date)}}</td>
       </tr>
     </table>
-  </vue-draggable-resizable >
+  </vue-draggable-resizable>
 </template>
 
 <script>
@@ -59,7 +58,7 @@ export default {
     return {
       x: 0,
       y: 0,
-      z: 0, // the lower, the further on the back it is
+      z: 10, // the lower, the further on the back it is
       heightTitle: 30,
       heightDate: 30,
       isDragging: false
@@ -67,9 +66,6 @@ export default {
   },
   methods: {
     onDrag() {
-      // Do thing
-    },
-    onDragStart() {
       this.$emit("postItDragStart");
       this.isDragging = true;
     },

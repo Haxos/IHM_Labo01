@@ -6,7 +6,9 @@
       {{ textPostIt }}
     </div>
   </div>
-  <CreatePostIt @canceled="onCancel" v-if="createShouldBeDisplayed"/>
+  <CreatePostIt 
+    @canceled="onCancel" v-if="createShouldBeDisplayed"
+  />
 </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
   },
   data() {
     return {
-      modeCreate: true,
+      modeCreate: false,
       textPostIt: "Cliquer pour ajouter une tâche"
     }
   },
