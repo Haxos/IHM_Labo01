@@ -28,6 +28,9 @@
   }
 }
 
+$box-shadow-offset: 6px;
+$box-shadow-blur: 12px;
+
 .cancel-button {
   position: absolute;
   background-color: #f7d4b1;
@@ -35,6 +38,10 @@
   right: 10px;
   width: 15%;
   text-align: center;
+
+  background: linear-gradient(145deg, #ffe3bd, #debf9f);
+  box-shadow: $box-shadow-offset $box-shadow-offset $box-shadow-blur #6d7655,
+    (-$box-shadow-offset) (-$box-shadow-offset) $box-shadow-blur #ffffff;
 }
 
 .validate-button {
@@ -44,4 +51,8 @@
   left: 10px;
   width: 15%;
   text-align: center;
+
+  background: linear-gradient(145deg, #f8ffc2, #d1e1a3);
+  box-shadow: $box-shadow-offset $box-shadow-offset $box-shadow-blur #6d7655,
+    (-$box-shadow-offset) (-$box-shadow-offset) $box-shadow-blur #ffffff;
 }
