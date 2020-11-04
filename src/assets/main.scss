@@ -3,3 +3,13 @@
 @import "postIt.scss";
 @import "~noty/src/noty.scss";
 @import "~noty/src/themes/mint.scss";
+
+html,
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
