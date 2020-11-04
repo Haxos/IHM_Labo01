@@ -34,11 +34,13 @@ export default {
     // Si une édition est en cours on ne fait rien
     if(this.hasPostItEdited)
       return;
+    let self = this;
     var n = new window.Noty({
       type:"warning",
       text: 'Voulez vous vraiment supprimer ce post-it?',
       buttons: [
         window.Noty.button('Oui', 'btn btn-success', function () {
+          self.$emit("deletePostIt",self.postItDragged);
           n.close();
         }),
         window.Noty.button('Non', 'btn btn-error', function () {

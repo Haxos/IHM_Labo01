@@ -61,27 +61,38 @@ export default {
             data: {
                 title: "",
                 description: "",
-                date: moment.now()
+                date: moment.now(),
+                id: null,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: 0
             }
         }
     },
     mounted() {
         if(this.postIt !== undefined) {
-            this.data.title = this.postIt.title;
-            this.data.description = this.postIt.content;
-            this.data.date = moment(this.postIt.date).format("YYYY-MM-DD");
+            this.updateDataFromPostIt(this.postIt)
         }
     },
     watch: {
         postIt(newVal) {
             if(newVal) {
-                this.data.title = newVal.title;
-                this.data.description = newVal.content;
-                this.data.date = newVal.date;
+                this.updateDataFromPostIt(newVal)
             }
         }
     },
     methods: {
+        updateDataFromPostIt(postIt) {
+                this.data.title = postIt.title;
+                this.data.description = postIt.content;
+                this.data.date = moment(postIt.date).format("YYYY-MM-DD");
+                this.data.id = postIt.id
+                this.data.left = postIt.left
+                this.data.right = postIt.right
+                this.data.top = postIt.top
+                this.data.bottom = postIt.bottom
+        },
         onCancel() {
             this.$emit("canceled");
         },

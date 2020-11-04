@@ -8,14 +8,18 @@
       :title="postIt.title"
       :content="postIt.description"
       :date="postIt.date"
-      :x="postIt.x"
-      :y="postIt.y"
+      :id="postIt.id"
+      :leftInit="postIt.left"
+      :rightInit="postIt.right"
+      :bottomInit="postIt.bottom"
+      :topInit="postIt.top"
     />
     <DeletePostIt 
       :post-it-dragged="postItDragged"
       :has-post-it-dragged="hasPostItDragged"
       :has-post-it-dropped="hasPostItDropped"
       :has-post-it-edited="hasPostItEdited"
+      @deletePostIt="onDeletePostIt"
     />
     <EditPostIt
       :post-it-dragged="postItDragged"
@@ -24,7 +28,7 @@
       @postItIsBeingEdited="onPostItBeingEdited"
     />
     <AddPostIt 
-      @postItAdded="addPostIt"
+      @postItAdded="onProcessPostIt"
       :post-it-dragged="hasPostItDragged"
     />
   </div>
@@ -73,13 +77,32 @@ export default {
     onPostItBeingEdited() {
       this.hasPostItEdited = true
     },
+    onProcessPostIt(el) {
+      if(el.id !== null) {
+        this.editPostIt(el)
+      } else {
+        this.addPostIt(el)
+      }
+    },
+    editPostIt(el) {
+      for(let i in this.postIts) {
+        if(this.postIts[i].id == el.id) {
+          this.postIts[i] = el;
+        }
+      }
+
+      this.updateLocalStorage();
+    },
     addPostIt(el) {
       let element = {}
+      element.id = Math.floor(Math.random() * 100000)
       element.title = el.title
       element.content = el.content
       element.date = el.date
-      element.x = 0
-      element.y = 0
+      element.left = 0
+      element.right = 0
+      element.top = 0
+      element.bottom = 0
       this.postIts.push(element)
       this.updateLocalStorage();
     },
@@ -93,10 +116,25 @@ export default {
       this.hasPostItDragged = true
       this.postItDragged = element
     },
+    onDeletePostIt(element) {
+      for(let i in this.postIts) {
+        if(this.postIts[i].id == element.id) {
+          this.postIts.splice(i, 1);
+        }
+      }
+      this.updateLocalStorage();
+    },
     onDragStop(element) {
       this.hasPostItDragged = false
       this.postItDragged = element
       this.hasPostItDropped = true
+      for(let i in this.postIts) {
+        if(this.postIts[i].id == element.id) {
+          this.postIts[i] = element;
+        }
+      }
+
+      this.updateLocalStorage();
     }
   }
   

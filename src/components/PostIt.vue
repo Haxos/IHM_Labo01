@@ -29,6 +29,10 @@ export default {
     VueDraggableResizable
   },
   props: {
+    id: {
+      Number,
+      default: 0
+    },
     width: {
       type: Number,
       default: 200,
@@ -49,6 +53,22 @@ export default {
       type: String,
       default: "content",
     },
+    leftInit: {
+      type: Number,
+      default: 0
+    },
+    rightInit: {
+      type: Number,
+      default: 0
+    },
+    topInit: {
+      type: Number,
+      default: 0
+    },
+    bottomInit: {
+      type: Number,
+      default: 0
+    },
     date: null
   },
   data() {
@@ -61,11 +81,26 @@ export default {
       heightTitle: 30,
       heightDate: 30,
       isDragging: false,
-      refPostIt: "ref_" + Math.random() * 1000
+      refPostIt: "ref_" + Math.random() * 1000,
+      initStyle: {}
     }
+  },
+  mounted() {
+    this.left = this.leftInit
+    this.right = this.rightInit
+    this.bottom = this.bottomInit
+    this.top = this.topInit
+    
+    this.initStyle.top = this.top;
+    this.initStyle.left = this.left;
+    this.initStyle.right = this.right;
+    this.initStyle.bottom = this.bottom;
+    
+    this.z = 10 // Pour la réactivité de la computed
   },
   methods: {
     onDrag() {
+      this.initStyle = {}
       this.left = this.$el.getBoundingClientRect().left
       this.top = this.$el.getBoundingClientRect().top
       this.bottom = this.$el.getBoundingClientRect().bottom
@@ -86,7 +121,8 @@ export default {
         right: this.right,
         title: this.title,
         content: this.content,
-        date: this.date
+        date: this.date,
+        id: this.id
       });
       this.isDragging = false;
     }
@@ -106,7 +142,7 @@ export default {
       return "White"
     },
     mainStyle() {
-      return {
+      let obj = {
         position: 'absolute',
         'z-index': this.z,
         width: `${this.width}px`,
@@ -116,6 +152,8 @@ export default {
         padding: '20px',
         'text-align': 'left',
       }
+
+      return Object.assign(obj,this.initStyle);
     },
     titleStyle() {
       return {
