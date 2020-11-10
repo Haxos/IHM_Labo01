@@ -6,7 +6,7 @@
       @postItDragStop="onDragStop"
       @postItDragStart="onDragStart"
       :title="postIt.title"
-      :content="postIt.description"
+      :content="postIt.content"
       :date="postIt.date"
       :id="postIt.id"
       :leftInit="postIt.left"
@@ -25,6 +25,7 @@
       :post-it-dragged="postItDragged"
       :has-post-it-dragged="hasPostItDragged"
       :has-post-it-dropped="hasPostItDropped"
+      @postItEdited="onProcessPostIt"
       @postItIsBeingEdited="onPostItBeingEdited"
     />
     <AddPostIt 

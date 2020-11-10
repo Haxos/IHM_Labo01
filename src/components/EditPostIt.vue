@@ -49,7 +49,7 @@ export default {
     },
     onValidate(event) {
       this.modeCreate = false;
-      this.$emit("postItAdded",event)
+      this.$emit("postItEdited",event)
     },
     onClick() {
         this.modeCreate = true;  

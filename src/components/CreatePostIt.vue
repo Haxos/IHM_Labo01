@@ -18,10 +18,10 @@
           <b-form-group label="Description">
             <b-input-group>
               <b-textarea
-                v-model="data.description"
+                v-model="data.content"
                 class="form-control form-control-lg"
                 type="text"
-                name="description"
+                name="content"
               />
             </b-input-group>
           </b-form-group>
@@ -66,7 +66,7 @@ export default {
     return {
       data: {
         title: "",
-        description: "",
+        content: "",
         date: moment.now(),
         id: null,
         left: 0,
@@ -91,7 +91,7 @@ export default {
   methods: {
     updateDataFromPostIt(postIt) {
       this.data.title = postIt.title;
-      this.data.description = postIt.content;
+      this.data.content = postIt.content;
       this.data.date = moment(postIt.date).format("YYYY-MM-DD");
       this.data.id = postIt.id;
       this.data.left = postIt.left;
