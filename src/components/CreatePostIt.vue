@@ -27,6 +27,9 @@
           </b-form-group>
         </b-row>
         <b-row>
+          <b-checkbox v-model="displayDate" class="checkbox-remainder" :value="true">Définir une date de rappel</b-checkbox>
+        </b-row>
+        <b-row v-if="displayDate">
           <b-form-group label="Date">
             <b-input-group>
               <b-form-input
@@ -64,10 +67,11 @@ export default {
   },
   data() {
     return {
+      displayDate: false,
       data: {
         title: "",
         content: "",
-        date: moment.now(),
+        date: null,
         id: null,
         left: 0,
         right: 0,
@@ -82,6 +86,11 @@ export default {
     }
   },
   watch: {
+    displayDate(newVal) {
+      if(!newVal) {
+        this.data.date = null
+      }
+    },
     postIt(newVal) {
       if (newVal) {
         this.updateDataFromPostIt(newVal);
@@ -92,12 +101,19 @@ export default {
     updateDataFromPostIt(postIt) {
       this.data.title = postIt.title;
       this.data.content = postIt.content;
-      this.data.date = moment(postIt.date).format("YYYY-MM-DD");
+      if(postIt.date !== null) {
+        this.displayDate = true
+        this.data.date = moment(postIt.date).format("YYYY-MM-DD");
+      } else {
+        this.displayDate = false;
+        this.data.date = null
+      }
       this.data.id = postIt.id;
       this.data.left = postIt.left;
       this.data.right = postIt.right;
       this.data.top = postIt.top;
       this.data.bottom = postIt.bottom;
+      this.data.validateDate = false
     },
     onCancel() {
       this.$emit("canceled");

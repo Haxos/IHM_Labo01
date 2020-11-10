@@ -43,7 +43,7 @@ export default {
           self.$emit("deletePostIt",self.postItDragged);
           n.close();
         }),
-        window.Noty.button('Non', 'btn btn-error', function () {
+        window.Noty.button('Non', 'btn btn-danger', function () {
             n.close();
         })
       ]

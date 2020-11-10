@@ -5,11 +5,13 @@
       v-for="postIt in postIts" :key="postIt.id"
       @postItDragStop="onDragStop"
       @postItDragStart="onDragStart"
+      @validatePostIt="onValidatePostIt"
       :title="postIt.title"
       :content="postIt.content"
       :date="postIt.date"
       :id="postIt.id"
       :leftInit="postIt.left"
+      :validateDateInit="postIt.validateDate"
       :rightInit="postIt.right"
       :bottomInit="postIt.bottom"
       :topInit="postIt.top"
@@ -61,15 +63,7 @@ export default {
     }
   },
   mounted() {
-    if(localStorage.postIts) {
-      let res = JSON.parse(localStorage.postIts)
-      this.postIts = res.map(value => {
-        return {
-          ...value,
-          date: moment(value.date)
-        }
-      })
-    }
+    this.refresh();
   },
   methods: {
     eraseAllPostIt() {
@@ -85,14 +79,25 @@ export default {
         this.addPostIt(el)
       }
     },
+    refresh() {
+      if(localStorage.postIts) {
+        let res = JSON.parse(localStorage.postIts)
+        this.postIts = res.map(value => {
+          return {
+            ...value,
+            date: value.date != null ? moment(value.date) : null
+          }
+        })
+      }
+    },
     editPostIt(el) {
       for(let i in this.postIts) {
         if(this.postIts[i].id == el.id) {
           this.postIts[i] = el;
         }
       }
-
       this.updateLocalStorage();
+      this.refresh();
     },
     addPostIt(el) {
       let element = {}
@@ -104,12 +109,21 @@ export default {
       element.right = 0
       element.top = 0
       element.bottom = 0
+      element.validateDate = false
       this.postIts.push(element)
       this.updateLocalStorage();
     },
     updateLocalStorage() {
       localStorage.postIts = "";
       localStorage.postIts = JSON.stringify(this.postIts)
+    },
+    onValidatePostIt(element) {
+      for(let i in this.postIts) {
+        if(this.postIts[i].id == element.id) {
+          this.postIts[i] = element;
+        }
+      }
+      this.updateLocalStorage();
     },
     onDragStart(element) {
       this.hasPostItEdited = false

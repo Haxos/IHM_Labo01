@@ -11,11 +11,12 @@
       <tr :style="titleStyle">
         <td>{{title}}</td>
       </tr>
+      <hr style="border: 2px solid rgba(0, 0, 0, 0.1); margin-top: 1px;"/>
       <tr :style="contentStyle">
         <td>{{content}}</td>
       </tr>
-      <tr :style="dateStyle">
-        <td>{{new Intl.DateTimeFormat('fr-CH').format(date)}}</td>
+      <tr v-if="shouldDisplayDate" :style="dateStyle">
+       <td><input class="validate-date" v-model="validateDate" type="checkbox">{{displayDate}}</td>
       </tr>
     </table>
   </vue-draggable-resizable>
@@ -23,7 +24,7 @@
 
 <script>
 import VueDraggableResizable from 'vue-draggable-resizable';
-
+import moment from "moment";
 export default {
   components: {
     VueDraggableResizable
@@ -35,11 +36,11 @@ export default {
     },
     width: {
       type: Number,
-      default: 200,
+      default: 250,
     },
     height: {
       type: Number,
-      default: 200,
+      default: 250,
     },
     color: {
       type: String,
@@ -69,6 +70,10 @@ export default {
       type: Number,
       default: 0
     },
+    validateDateInit: {
+      type: Boolean,
+      default: false
+    },
     date: null
   },
   data() {
@@ -82,7 +87,8 @@ export default {
       heightDate: 30,
       isDragging: false,
       refPostIt: "ref_" + Math.random() * 1000,
-      initStyle: {}
+      initStyle: {},
+      validateDate: false
     }
   },
   mounted() {
@@ -90,6 +96,7 @@ export default {
     this.right = this.rightInit
     this.bottom = this.bottomInit
     this.top = this.topInit
+    this.validateDate = this.validateDateInit
     
     this.initStyle.top = this.top;
     this.initStyle.left = this.left;
@@ -97,6 +104,21 @@ export default {
     this.initStyle.bottom = this.bottom;
     
     this.z = 10 // Pour la réactivité de la computed
+  },
+  watch: {
+    validateDate() {
+      this.$emit("validatePostIt", {
+        left: this.left,
+        top: this.top,
+        bottom: this.bottom,
+        right: this.right,
+        title: this.title,
+        content: this.content,
+        date: this.date,
+        id: this.id,
+        validateDate: this.validateDate
+      })
+    }
   },
   methods: {
     onDrag() {
@@ -122,12 +144,35 @@ export default {
         title: this.title,
         content: this.content,
         date: this.date,
-        id: this.id
+        id: this.id,
+        validateDate: this.validateDate
       });
       this.isDragging = false;
     }
   },
   computed: {
+    shouldDisplayDate() {
+      return this.date !== null;
+    },
+    displayDate() {
+      if(this.date !== null) {
+        return "RAPPEL: " + moment(this.date).format("DD.MM.YYYY")
+      } else {
+        return ""
+      }
+    },
+    backgroundColor() {
+      if(this.validateDate || this.date === undefined || this.date === null) {
+        return "limegreen"
+      } else {
+        let date = moment(this.date)
+        if(moment() > date) {
+          return "red"
+        } else {
+          return "orange"
+        }
+      }
+    },
     dragOptions() {
       return {
         animation: 0,
@@ -147,7 +192,7 @@ export default {
         'z-index': this.z,
         width: `${this.width}px`,
         height: `${this.height}px`,
-        'background-color': this.color,
+        'background-color': this.backgroundColor,
         'color': this.fontColor,
         padding: '20px',
         'text-align': 'left',
@@ -159,21 +204,29 @@ export default {
       return {
         height: `${this.heightTitle}px`,
         'vertical-align': 'top',
+        'font-weight':'bold'
       }
     },
     contentStyle() {
       return {
-        height: `${this.height - (this.heightTitle + this.heightDate)}px`,
+        height: `140px`,
         'vertical-align': 'top',
         'padding-top': '10px',
         'padding-bottom': '10px',
       }
     },
     dateStyle() {
-      return {
+      let style = {
         height: `${this.heightDate}px`,
-        'text-align': 'end'
+        'text-align': 'end',
+        'font-size': '14px'
       }
+
+      if(this.validateDate) {
+        style['text-decoration'] = "line-through"
+      }
+
+      return style;
     },
   }
 };
